@@ -23,7 +23,6 @@ function doPost(e) {
 
   const arrayOfData = headersOriginalOrder.map(header => bodyJSON[header]);
   const arrayColumnA = ws.getRange(2,2,ws.getLastRow()-1,1).getValues();
-  console.log(arrayColumnA);
   const newIdNumber = getMaxFromArrayOfArray_(arrayColumnA) + 1;
   //arrayOfData.unshift(newIdNumber);
   ws.appendRow(arrayOfData);
