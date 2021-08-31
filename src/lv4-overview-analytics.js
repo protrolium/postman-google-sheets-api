@@ -7,9 +7,6 @@ function doPost(e) {
   const accountOverviewSheet = ss.getSheetByName("Account Overview");
   const headers = accountOverviewSheet.getRange(1,1,1,accountOverviewSheet.getLastColumn()).getValues()[0];
   const headersOriginalOrder = headers.slice();
-  //headersOriginalOrder.shift();
-  //remove first column
-  //headers.shift();
   headers.sort();
 
   const body = e.postData.contents;
@@ -22,13 +19,9 @@ function doPost(e) {
   }
 
   const arrayOfData = headersOriginalOrder.map(header => bodyJSON[header]);
-  //console.log(headersOriginalOrder);
-  //console.log(arrayOfData);
   const arrayColumnA = accountOverviewSheet.getRange(2,2,accountOverviewSheet.getLastRow()-1,1).getValues();
   const newIdNumber = getMaxFromArrayOfArray_(arrayColumnA) + 1;
-  //arrayOfData.unshift(newIdNumber);
   accountOverviewSheet.appendRow(arrayOfData);
-  //bodyJSON.id = newIdNumber;
   return sendJSON_(bodyJSON);
 
 }
