@@ -1,11 +1,11 @@
 function doPost(e) {
 
   const requiredColumns = ["Comment History","Follower Number"]
-  let jsonResponse;  
+  let jsonResponse;
 
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const ws = ss.getSheetByName("Overview Analytics");
-  const headers = ws.getRange(1,1,1,ws.getLastColumn()).getValues()[0];
+  const accountOverviewSheet = ss.getSheetByName("Account Overview");
+  const headers = accountOverviewSheet.getRange(1,1,1,accountOverviewSheet.getLastColumn()).getValues()[0];
   const headersOriginalOrder = headers.slice();
   //headersOriginalOrder.shift();
   //remove first column
@@ -15,17 +15,19 @@ function doPost(e) {
   const body = e.postData.contents;
   const bodyJSON = JSON.parse(body);
   const headersPassed = Object.keys(bodyJSON).sort();
-  
+
   if(!compareTwoArray_(headers,headersPassed,requiredColumns)) {
     jsonResponse = {status: 500,message:"Invalid arugments passed"};
     return sendJSON_(jsonResponse);
   }
 
   const arrayOfData = headersOriginalOrder.map(header => bodyJSON[header]);
-  const arrayColumnA = ws.getRange(2,2,ws.getLastRow()-1,1).getValues();
+  //console.log(headersOriginalOrder);
+  //console.log(arrayOfData);
+  const arrayColumnA = accountOverviewSheet.getRange(2,2,accountOverviewSheet.getLastRow()-1,1).getValues();
   const newIdNumber = getMaxFromArrayOfArray_(arrayColumnA) + 1;
   //arrayOfData.unshift(newIdNumber);
-  ws.appendRow(arrayOfData);
+  accountOverviewSheet.appendRow(arrayOfData);
   //bodyJSON.id = newIdNumber;
   return sendJSON_(bodyJSON);
 
