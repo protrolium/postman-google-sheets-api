@@ -1,11 +1,11 @@
 function doPost(e) {
 
-    let jsonResponse;
+  let jsonResponse;
 
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const topTerritoriesSheet = ss.getSheetByName("Top Territories");
-    const genderSheet = ss.getSheetByName("Gender");
-    const followerActivitySheet = ss.getSheetByName("Follower Activity");
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const topTerritoriesSheet = ss.getSheetByName("Top Territories");
+  const genderSheet = ss.getSheetByName("Gender");
+  const followerActivitySheet = ss.getSheetByName("Follower Activity");
 
   const body = e.postData.contents;
   const bodyJSON = JSON.parse(body);
