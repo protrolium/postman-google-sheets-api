@@ -1,30 +1,20 @@
 function doPost(e) {
 
-  const requiredColumns = ["Captions","Date Posted", "Time Posted (UTC)"]
-  let jsonResponse;
-
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const contentAnalyticsSheet = ss.getSheetByName("Content Analytics");
-  const headers = contentAnalyticsSheet.getRange(1,1,1,contentAnalyticsSheet.getLastColumn()).getValues()[0];
-  const headersOriginalOrder = headers.slice();
-  headers.sort();
+  const contentAnalyticsAppendedSheet = ss.getSheetByName("Content Analytics Appended");
+  const headers_ca = contentAnalyticsSheet.getRange(1,1,1,contentAnalyticsSheet.getLastColumn()).getValues()[0];
+  const headersOriginalOrder_ca = headers_ca.slice();
+  const headers_caa = contentAnalyticsAppendedSheet.getRange(1,1,1,contentAnalyticsAppendedSheet.getLastColumn()).getValues()[0];
+  const headersOriginalOrder_caa = headers_caa.slice();
+  headers_ca.sort();
+  headers_caa.sort();
 
   const body = e.postData.contents;
   const bodyJSON = JSON.parse(body);
-  const headersPassed = Object.keys(bodyJSON).sort();
 
-  if(!compareTwoArray_(headers,headersPassed,requiredColumns)) {
-    jsonResponse = {status: 500,message:"Invalid arugments passed"};
-    return sendJSON_(jsonResponse);
-  }
-
-  const arrayOfData = headersOriginalOrder.map(header => bodyJSON[header]);
-  const arrayColumnA = contentAnalyticsSheet.getRange(2,2,contentAnalyticsSheet.getLastRow(),1).getValues();
-  contentAnalyticsSheet.appendRow(arrayOfData);
-}
-
-function compareTwoArray_(arrAllColumns,arrColumnsPassed,arrRequiredColumns) {
-  if(!arrRequiredColumns.every(item => arrColumnsPassed.includes(item))) return false;
-  if(!arrColumnsPassed.every(item => arrAllColumns.includes(item))) return false;
-  return true;
+  const contentAnalyticsArray = headersOriginalOrder_ca.map(header => bodyJSON[header]);
+  const contentAnalyticsAppendedArray = headersOriginalOrder_caa.map(header => bodyJSON[header]);
+  contentAnalyticsAppendedSheet.appendRow(contentAnalyticsAppendedArray);
+  contentAnalyticsSheet.appendRow(contentAnalyticsArray);
 }
