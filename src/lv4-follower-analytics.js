@@ -19,7 +19,6 @@ function doPost(e) {
   const lastRowTopTerritoriesSheet = topTerritoriesSheet.getLastRow();
   topTerritoriesSheet.getRange(lastRowTopTerritoriesSheet + 1, 1, 5, 3).setValues(regionsArray);
 
-
   //Follower Active Hours Table
   const activeHistoryHoursArray = bodyJSON.follower_active_history_hours[0].value.map(items => [
     new Date().toLocaleString().split(',')[0]
@@ -46,20 +45,22 @@ function doPost(e) {
     activeHistoryHoursArray_1[i],
     activeHistoryHoursArray_2[i]);
   }
-
   const lastRowFollowerActivitySheet = followerActivitySheet.getLastRow();
   followerActivitySheet.getRange(lastRowFollowerActivitySheet + 1, 1, 24, 5).setValues(activeHistoryHoursArray);
 
   // Gender Table
-  const genderArray = bodyJSON.follower_gender_percent.value.map(items => (items.value));
   const followerNum = bodyJSON.follower_num.value;
+  const genders = bodyJSON.follower_gender_percent.value;
+  const genderFlatten = Object.assign({}, ...genders.map(item => ({[item.key]:item.value})));
+  console.log(genders);
+  console.log(genderFlatten);
+
   const genderSheetArray = [
     new Date().toLocaleString().split(',')[0],
-    (genderArray[0] * 100).toFixed(5) + '%',
-    (genderArray[1] * 100).toFixed(5) + '%',
+    (genderFlatten["Male"] * 100).toFixed(5) + '%',
+    (genderFlatten["Female"] * 100).toFixed(5) + '%',
     followerNum
   ];
-  //console.log(genderSheetArray)
   const lastRowGenderSheet = genderSheet.getLastRow();
   genderSheet.appendRow(genderSheetArray);
 }
