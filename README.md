@@ -7,7 +7,7 @@ App Script flow for POST requests made via Postman and sent to a Google Sheet
 - use the generated link to make POST request within Postman
 - once POST request is made, global variables stored in Postman get sent to Google Sheet
 
-![postman](https://teachingmachine.tv/_files/postman/postman.png)
+![postman](https://teachingmachine.tv/_files/postman/postman-1.png)
 ![postman2](https://teachingmachine.tv/_files/postman/postman-2.png)
 
 ```
