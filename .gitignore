@@ -1,0 +1,6 @@
+node_modules/
+tests/
+postman/*.json
+postman/env/
+package-lock.json
+package.json
