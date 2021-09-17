@@ -3,9 +3,9 @@ App Script flow for POST requests made via Postman and sent to a Google Sheet
 
 ### Flow
 - local javascript is pushed to Apps Script via `clasp push`
-- run new Delopyment of App Script, generating Web App link
-- use the generated link to make POST request within Postman
-- once POST request is made, global variables stored in Postman get sent to Google Sheet
+- run new Deployment of Apps Script, generating a new Web App link (Anyone).
+- use the generated link to call POST request in Postman
+- once POST request is made, create/store Postman environment variables and send to Google Sheet
 
 ![postman](https://teachingmachine.tv/_files/postman/postman-1.png)
 ![postman2](https://teachingmachine.tv/_files/postman/postman-2.png)
@@ -42,7 +42,7 @@ App Script flow for POST requests made via Postman and sent to a Google Sheet
 // Regions Table
   const regionsArray = bodyJSON.follower_region_percent.value.map(items => [
     new Date().toLocaleString().split(',')[0],
-    items.key, 
+    items.key,
     (items.value * 100).toFixed(5) + '%'
     ]);
   const lastRowTopTerritoriesSheet = topTerritoriesSheet.getLastRow();
