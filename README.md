@@ -10,10 +10,6 @@ App Script flow for POST requests made via Postman and sent to a Google Sheet
 ![postman](https://teachingmachine.tv/_files/postman/postman.png)
 ![postman2](https://teachingmachine.tv/_files/postman/postman-2.png)
 
-### Areas to Improve
-- script execution is successful, but only writes single rows at a time.
-- needs a method to write nested properties to a range of rows in the table 
-
 ```
 "follower_region_percent": {
         "status": 0,
@@ -41,15 +37,27 @@ App Script flow for POST requests made via Postman and sent to a Google Sheet
         ]
     }
 ```
-Desired formatting for the example above would be something like
+
 ```
-+-----------------+--------------+--+--+--+
-| Top Territories | Distribution |  |  |  |
-+=================+==============+==+==+==+
-| US              | 0.84         |  |  |  |
-+-----------------+--------------+--+--+--+
-| MX              | 0.023        |  |  |  |
-+-----------------+--------------+--+--+--+
-| RU              | 0.009        |  |  |  |
-+-----------------+--------------+--+--+--+
+// Regions Table
+  const regionsArray = bodyJSON.follower_region_percent.value.map(items => [
+    new Date().toLocaleString().split(',')[0],
+    items.key, 
+    (items.value * 100).toFixed(5) + '%'
+    ]);
+  const lastRowTopTerritoriesSheet = topTerritoriesSheet.getLastRow();
+  topTerritoriesSheet.getRange(lastRowTopTerritoriesSheet + 1, 1, 5, 3).setValues(regionsArray);
+```
+
+Achieves the desired formatting and writes range to sheet:
+```
++------------+-----------------+--------------+--+--+--+
+| Date       | Top Territories | Distribution |  |  |  |
++============+=================+==============+==+==+==+
+| 2021-09-17 | US              | 0.84         |  |  |  |
++------------+-----------------+--------------+--+--+--+
+| 2021-09-17 | MX              | 0.023        |  |  |  |
++------------+-----------------+--------------+--+--+--+
+| 2021-09-17 | RU              | 0.009        |  |  |  |
++------------+-----------------+--------------+--+--+--+
 ```
