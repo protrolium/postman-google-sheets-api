@@ -1,5 +1,5 @@
 node_modules/
-tests/
+test/
 postman/*.json
 postman/env/
 package-lock.json
