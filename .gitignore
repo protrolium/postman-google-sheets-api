@@ -1,6 +1,8 @@
 node_modules/
 test/
+.vscode/
 postman/*.json
 postman/env/
 package-lock.json
 package.json
+
