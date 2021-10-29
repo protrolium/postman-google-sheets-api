@@ -67,7 +67,7 @@ for (let i = 0; i < comments.length; i++) {
     commentUserNickname[i], 
     commentMediaID[i]);
 }
-//console.log(commentListArray);
+console.log(commentListArray);
 
 
 /* ~ GET FOLLOWS ~ */ 
@@ -75,7 +75,7 @@ for (let i = 0; i < comments.length; i++) {
 //filter by type 33 follow
 const followersObj = noticeList.filter(items => items.type === 33)
 console.log('FOLLOWS FOLLOWS FOLLOWS FOLLOWS');
-// console.log(followersObj.map(items => items.follow.from_user));
+console.log(followersObj.length);
 
 const followUserUniqueID = followersObj.map(items => items.follow.from_user.unique_id);
 // console.log(followUserUniqueID);
@@ -123,11 +123,12 @@ for (let i = 0; i < followersObj.length; i++) {
 console.log(followerListArray);
 
 
+/* ~ GET LIKES ~ */ 
 
 //filter by type 41 likes
-// const likeObj = noticeList.filter(items => items.type === 41);
-// console.log('LIKES LIKES LIKES LIKES');
-// console.log(likeObj.length);
+const likeObj = noticeList.filter(items => items.type === 41);
+console.log('LIKES LIKES LIKES LIKES');
+console.log(likeObj.length);
 
 
 //const lastRowFollowersListSheet = followersListSheet.getLastRow();
