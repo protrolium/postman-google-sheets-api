@@ -1,9 +1,10 @@
 const fs = require('fs');
-const data = fs.readFileSync('getNotifications-all-001.json', 'utf-8');
+const data = fs.readFileSync('../test/getNotifications-all-001.json', 'utf-8');
 //parse JSON string to JSON object
 const bodyJSON = JSON.parse(data);
 
 const urlString = "https://www.tiktok.com/@lv4official/video/"
+
 const noticeList = bodyJSON.notice_lists[0].notice_list;
 //console.log(noticeList);
 
@@ -74,9 +75,52 @@ for (let i = 0; i < comments.length; i++) {
 //filter by type 33 follow
 const followersObj = noticeList.filter(items => items.type === 33)
 console.log('FOLLOWS FOLLOWS FOLLOWS FOLLOWS');
-console.log(followersObj.map(items => items.follow.from_user.unique_id));
+// console.log(followersObj.map(items => items.follow.from_user));
+
+const followUserUniqueID = followersObj.map(items => items.follow.from_user.unique_id);
+// console.log(followUserUniqueID);
+
+const followUserNickname = followersObj.map(items => items.follow.from_user.nickname);
+// console.log(followUserNickname);
+
+const followDate = followersObj.map(items => { 
+                    var epochTime = items.create_time;
+                    epochConvert = new Date(epochTime * 1000);
+                    creationDate = epochConvert.toLocaleDateString();
+                return creationDate;
+                });
+// console.log(followDate);
+
+const isVerified = followersObj.map(boolean => {
+    if (boolean.follow.from_user.verification_type === 0) {
+        return 'No';
+    } else {
+        return 'Yes';
+    }
+});
+// console.log(isVerified);
 
 
+/* create array of arrays in the format:
+[
+    [ '10/20/2021', 'glitchboiuno', 'glitchboiuno', 'No' ],
+    [ '10/20/2021', 'marion1_2', 'Marion1_2', 'No' ],
+    ...
+]  */
+
+var followerListArray = new Array();
+for (let i = 0; i < followersObj.length; i++) {
+    //initialize Array order[i]
+    followerListArray[i] = new Array();
+    //add elements
+    followerListArray[i].push(
+    followDate[i], 
+    followUserUniqueID[i], 
+    followUserNickname[i], 
+    isVerified[i]);
+}
+
+console.log(followerListArray);
 
 
 
