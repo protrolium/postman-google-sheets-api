@@ -1,5 +1,5 @@
 const fs = require('fs');
-const data = fs.readFileSync('../test/getNotifications-all-001.json', 'utf-8');
+const data = fs.readFileSync('../test/getNotifications-all-d.json', 'utf-8');
 //parse JSON string to JSON object
 const bodyJSON = JSON.parse(data);
 
@@ -14,6 +14,7 @@ const noticeList = bodyJSON.notice_lists[0].notice_list;
 const commentObj = noticeList.filter(items => items.type === 31);
 console.log('COMMENTS COMMENTS COMMENTS COMMENTS');
 console.log(commentObj.length);
+// console.log(commentObj.map(items => items.comment));
 
 
 // check if content is our own by matching our userID and then map to an array
@@ -128,7 +129,7 @@ console.log(followerListArray);
 //filter by type 41 likes
 const likeObj = noticeList.filter(items => items.type === 41);
 console.log('LIKES LIKES LIKES LIKES');
-console.log(likeObj.length);
+console.log(likeObj.map(items => items.digg.digg_type));
 
 
 //const lastRowFollowersListSheet = followersListSheet.getLastRow();
