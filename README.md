@@ -7,9 +7,6 @@ App Script flow for POST requests made via Postman and sent to a Google Sheet
 - use the generated link to call POST request in Postman
 - once POST request is made, create/store Postman environment variables and send to Google Sheet
 
-![postman](https://teachingmachine.tv/_files/postman/postman-1.png)
-![postman2](https://teachingmachine.tv/_files/postman/postman-2.png)
-
 ```
 "follower_region_percent": {
         "status": 0,
